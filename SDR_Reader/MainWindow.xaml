@@ -1,0 +1,74 @@
+﻿<Window x:Class="SDR_Reader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SDR_Reader"
+        xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        mc:Ignorable="d"
+        Title="SDR Reader" Height="450" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Summary Charts">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bar chart of volume by commodity" />
+                    <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Pie chart of volume by product" />
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Line chart of volume in 15 minute increments" />
+                    <oxy:PlotView Grid.Row="1" Grid.Column="1" Model="{Binding Model}" x:Name="chartExample" Margin="5" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Summary Data">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Trade data aggregated by market" />
+                    <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Trade data aggregated by contract" />
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Trade data aggregated by product" />
+                    <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Chef's choice" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Trade Details">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
+                    <ListView x:Name="listRawTrades" Grid.Row="0" Margin="5" SelectionChanged="listRawTrades_SelectionChanged" ItemsSource="{Binding RawTrades}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" Width="100" DisplayMemberBinding="{Binding Id}" />
+                                <GridViewColumn Header="Direction" Width="100" DisplayMemberBinding="{Binding Direction}" />
+                                <GridViewColumn Header="Quantity" Width="100" DisplayMemberBinding="{Binding Quantity}" />
+                                <GridViewColumn Header="Market" Width="250" DisplayMemberBinding="{Binding Market}" />
+                                <GridViewColumn Header="Product" Width="250" DisplayMemberBinding="{Binding Product}" />
+                                <GridViewColumn Header="Price" Width="100" DisplayMemberBinding="{Binding Price}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <GroupBox Header="Trade Details" Grid.Row="1">
+                        <Label x:Name="lblTradeDetail" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Put all the details of the selected trade in here" />
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
